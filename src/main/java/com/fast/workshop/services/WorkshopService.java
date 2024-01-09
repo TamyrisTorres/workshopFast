@@ -68,10 +68,8 @@ public class WorkshopService {
             throw new IllegalArgumentException("Colaborador não encontrado com ID: " + colaboradorId);
         }
 
-        ataPresenca.setColaborador(colaborador);
+        ataPresenca.setColaborador(List.of(colaborador));
 
-        // Associa a AtaPresenca ao Colaborador
-        colaborador.getAtasPresenca().add(ataPresenca);
         colaboradorService.atualizar(colaborador.getIdColaborador(), colaborador);
 
         // Associa a AtaPresenca ao Workshop
@@ -90,12 +88,13 @@ public class WorkshopService {
         if (colaborador != null) {
             List<Workshop> workshops = new ArrayList<>();
 
-            for (AtaPresenca ataPresenca : colaborador.getAtasPresenca()) {
-                workshops.add(ataPresenca.getWorkshop());
-            }
+           AtaPresenca ataPresenca = colaborador.getAtasPresenca();
+           workshops.add(ataPresenca.getWorkshop());
 
-            return workshops;
-        } else {
+           return workshops;
+
+        }
+        else {
             throw new IllegalArgumentException("Colaborador não encontrado com ID: " + idColaborador);
         }
     }

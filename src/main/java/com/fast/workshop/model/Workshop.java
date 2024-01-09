@@ -1,9 +1,9 @@
 package com.fast.workshop.model;
 
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 public class Workshop {
@@ -15,21 +15,9 @@ public class Workshop {
     private LocalDate dataRealizacao;
     private String descricao;
 
-    @OneToOne(mappedBy = "workshop")
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "id_ataPresenca")
     private AtaPresenca ataPresenca;
-
-    @ManyToOne
-    @JoinColumn(name = "colaborador_id")
-    private Colaborador colaborador;
-
-    public Colaborador getColaborador() {
-        return colaborador;
-    }
-
-    public void setColaborador(Colaborador colaborador) {
-        this.colaborador = colaborador;
-    }
-
     public Integer getIdWorkshop() {
         return idWorkshop;
     }

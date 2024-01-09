@@ -1,7 +1,9 @@
 package com.fast.workshop.model;
 
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class AtaPresenca {
@@ -10,13 +12,12 @@ public class AtaPresenca {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idAta;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "workshop_id")
     private Workshop workshop;
 
-    @ManyToOne
-    @JoinColumn(name = "colaborador_id")
-    private Colaborador colaborador;
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private List<Colaborador> colaboradores;
 
     public Integer getIdAta() {
         return idAta;
@@ -34,11 +35,11 @@ public class AtaPresenca {
         this.workshop = workshop;
     }
 
-    public Colaborador getColaborador() {
-        return colaborador;
+    public List<Colaborador> getColaboradores() {
+        return colaboradores;
     }
 
-    public void setColaborador(Colaborador colaborador) {
-        this.colaborador = colaborador;
+    public void setColaborador(List<Colaborador> colaboradores) {
+        this.colaboradores = colaboradores;
     }
 }

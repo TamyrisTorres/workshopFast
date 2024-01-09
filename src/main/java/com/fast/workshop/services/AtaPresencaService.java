@@ -8,7 +8,6 @@ import com.fast.workshop.repository.WorkshopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -56,14 +55,16 @@ public class AtaPresencaService {
 
         AtaPresenca ataPresenca = optionalAtaPresenca.get();
 
-        Colaborador colaborador = ataPresenca.getColaborador();
+        List<Colaborador> colaboradores = ataPresenca.getColaboradores();
 
-        if (colaborador != null && colaborador.getIdColaborador().equals(idColaborador)) {
-            ataPresenca.setColaborador(null);
+        for (Colaborador colaborador: colaboradores) {
+            if (colaborador != null && colaborador.getIdColaborador().equals(idColaborador)) {
+                ataPresenca.setColaborador(null);
+                ataPresencaRepository.save(ataPresenca);
+            }
+
             ataPresencaRepository.save(ataPresenca);
         }
-
-        ataPresencaRepository.save(ataPresenca);
 
         return ataPresenca;
     }

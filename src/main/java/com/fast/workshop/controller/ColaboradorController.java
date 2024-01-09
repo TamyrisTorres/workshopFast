@@ -1,7 +1,6 @@
 package com.fast.workshop.controller;
 
 import com.fast.workshop.model.Colaborador;
-import com.fast.workshop.model.Workshop;
 import com.fast.workshop.services.ColaboradorService;
 import com.fast.workshop.services.WorkshopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/Colaborador")
@@ -51,11 +49,6 @@ public class ColaboradorController {
     @GetMapping("/ordenados")
     public ResponseEntity<List<Colaborador>> obterColaboradoresOrdenados() {
         List<Colaborador> colaboradoresOrdenados = colaboradorService.obterTodos();
-
-        colaboradoresOrdenados.forEach(colaborador -> {
-            List<Workshop> workshopsDoColaborador = workshopService.obterWorkshopsDoColaborador(colaborador.getIdColaborador());
-            colaborador.setWorkshops(workshopsDoColaborador);
-        });
 
         colaboradoresOrdenados.sort(Comparator.comparing(Colaborador::getNome));
 
