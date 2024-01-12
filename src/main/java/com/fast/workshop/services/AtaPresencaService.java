@@ -22,14 +22,19 @@ public class AtaPresencaService {
     private WorkshopRepository workshopRepository;
 
     @Autowired
+    private ColaboradorService colaboradorService;
+
+    @Autowired
     private ColaboradorRepository colaboradorRepository;
 
     public AtaPresenca adicionar(AtaPresenca ataPresenca) {
         return ataPresencaRepository.save(ataPresenca);
     }
 
-    public Optional<AtaPresenca> obterPorID(Integer id) {
-        return ataPresencaRepository.findById(id);
+    public AtaPresenca obterPorID(Integer id) {
+        Optional<AtaPresenca> ataPresenca =  ataPresencaRepository.findById(id);
+
+        return ataPresenca.get();
     }
 
     public List<AtaPresenca> obterTodos() {
@@ -40,20 +45,14 @@ public class AtaPresencaService {
         ataPresencaRepository.deleteById(id);
     }
 
-    public AtaPresenca atualiza (Integer id, AtaPresenca ataPresenca) {
+    public AtaPresenca atualizar (Integer id, AtaPresenca ataPresenca) {
         ataPresenca.setIdAta(id);
 
         return ataPresencaRepository.save(ataPresenca);
     }
 
     public AtaPresenca deletarColaboradorDaAta(Integer idAta, Integer idColaborador) {
-        Optional<AtaPresenca> optionalAtaPresenca = ataPresencaRepository.findById(idAta);
-
-        if (optionalAtaPresenca.isEmpty()) {
-            throw new NoSuchElementException("Ata não encontrada com ID: " + idAta);
-        }
-
-        AtaPresenca ataPresenca = optionalAtaPresenca.get();
+        AtaPresenca ataPresenca = obterPorID(idAta);
 
         List<Colaborador> colaboradores = ataPresenca.getColaboradores();
 
@@ -65,6 +64,18 @@ public class AtaPresencaService {
 
             ataPresencaRepository.save(ataPresenca);
         }
+
+        return ataPresenca;
+    }
+
+    public AtaPresenca adicionarColaborador(Integer idAta, Integer idColaborador) {
+        AtaPresenca ataPresenca = obterPorID(idAta);
+
+        Colaborador colaborador = colaboradorService.obterPorId(idColaborador);
+
+        ataPresenca.setColaborador(List.of(colaborador));
+
+        ataPresenca = atualizar(idAta, ataPresenca);
 
         return ataPresenca;
     }

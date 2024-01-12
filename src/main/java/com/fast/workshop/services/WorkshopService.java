@@ -24,14 +24,19 @@ public class WorkshopService {
     @Autowired
     private ColaboradorService colaboradorService;
 
+    @Autowired
+    private AtaPresencaService ataPresencaService;
+
     public Workshop adicionar(Workshop workshop) {
         workshop = workshopRepository.save(workshop);
 
         return workshop;
     }
 
-    public Optional<Workshop> obterPorID(Integer id) {
-        return workshopRepository.findById(id);
+    public Workshop obterPorID(Integer id) {
+        Optional<Workshop> workshop =  workshopRepository.findById(id);
+
+        return workshop.get();
     }
 
     public List<Workshop> obterTodos() {
@@ -49,18 +54,16 @@ public class WorkshopService {
     }
 
 
-    public Workshop criarWorkshopComAtaEColaborador(Workshop workshop, Integer colaboradorId) {
+    public void criarWorkshopComAtaEColaborador(Integer workshopId, Integer colaboradorId, Integer ataId) {
+        Workshop workshop = obterPorID(workshopId);
 
-        if (workshop == null) {
-            throw new IllegalArgumentException("Workshop não pode ser nulo");
-        }
+        AtaPresenca ataPresenca = ataPresencaService.obterPorID(ataId);
+
+        ataPresenca.setWorkshop(workshop);
 
         if (colaboradorId == null) {
             throw new IllegalArgumentException("ID do Colaborador não pode ser nulo");
         }
-
-        AtaPresenca ataPresenca = new AtaPresenca();
-        ataPresenca.setWorkshop(workshop);
 
         Colaborador colaborador = colaboradorService.obterPorId(colaboradorId);
 
@@ -76,9 +79,6 @@ public class WorkshopService {
         workshop.setAtaPresenca(ataPresenca);
         workshopRepository.save(workshop);
 
-        ataPresencaRepository.save(ataPresenca);
-
-        return workshop;
     }
 
 

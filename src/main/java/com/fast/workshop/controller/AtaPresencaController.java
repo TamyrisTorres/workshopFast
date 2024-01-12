@@ -26,7 +26,7 @@ public class AtaPresencaController {
     }
 
     @GetMapping("/{id}")
-    public Optional<AtaPresenca> obterPorId (@PathVariable Integer id) {
+    public AtaPresenca obterPorId (@PathVariable Integer id) {
         return ataPresencaService.obterPorID(id);
     }
 
@@ -37,12 +37,17 @@ public class AtaPresencaController {
 
     @PutMapping("/{id}")
     public AtaPresenca atualizar(@RequestBody AtaPresenca ataPresenca, @PathVariable Integer id) {
-        return ataPresencaService.atualiza(id, ataPresenca);
+        return ataPresencaService.atualizar(id, ataPresenca);
     }
 
     @DeleteMapping("/{ataId}/colaboradores/{colaboradorId}")
     public AtaPresenca removerColaboradorDeAta(@PathVariable Integer ataId, @PathVariable Integer colaboradorId) {
         return ataPresencaService.deletarColaboradorDaAta(ataId, colaboradorId);
+    }
+
+    @PutMapping("/{ataId}/{colaboradorId}")
+    public AtaPresenca adicionarColaborador(@PathVariable Integer ataId, @PathVariable Integer colaboradorId) {
+        return ataPresencaService.adicionarColaborador(ataId, colaboradorId);
     }
 
 }

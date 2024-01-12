@@ -4,6 +4,7 @@ import com.fast.workshop.model.AtaPresenca;
 import com.fast.workshop.model.Workshop;
 import com.fast.workshop.services.WorkshopService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class WorkShopController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Workshop> obterPorId(Integer id) {
+    public Workshop obterPorId(Integer id) {
         return workshopService.obterPorID(id);
     }
 
@@ -42,10 +43,11 @@ public class WorkShopController {
         return workshopService.atualizar(id, workshop);
     }
 
-    @PutMapping("/{workshopId}/atas/{colaboradorId}")
-    public Workshop criarWorkshopComAtaEColaborador(@RequestBody Workshop workshop, @PathVariable Integer colaboradorId) {
+    @PutMapping("/{workshopId}/{ataId}/{colaboradorId}")
+    public void criarWorkshopComAtaEColaborador(@PathVariable Integer workshopId, @PathVariable Integer ataId, @PathVariable Integer colaboradorId) {
 
-        return workshopService.criarWorkshopComAtaEColaborador(workshop, colaboradorId);
+         workshopService.criarWorkshopComAtaEColaborador(
+                workshopId, colaboradorId, ataId);
     }
 
 }
