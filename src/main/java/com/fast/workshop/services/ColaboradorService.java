@@ -41,19 +41,8 @@ public class ColaboradorService {
     }
 
     public Colaborador atualizar(Integer id, Colaborador colaborador) {
-        Optional<Colaborador> colabOptional = colaboradorRepository.findById(id);
+        colaborador.setIdColaborador(id);
 
-        if (colabOptional.isPresent()) {
-            Colaborador colab = colabOptional.get();
-
-            colab.setNome(colaborador.getNome());
-
-            colab.setAtasPresenca(colaborador.getAtasPresenca());
-
-            return colaboradorRepository.save(colab);
-
-        } else {
-            throw new IllegalArgumentException("Colaborador não encontrado com ID: " + id);
-        }
+        return colaboradorRepository.save(colaborador);
     }
 }

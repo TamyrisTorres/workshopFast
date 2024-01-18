@@ -28,6 +28,10 @@ public class WorkshopService {
     private AtaPresencaService ataPresencaService;
 
     public Workshop adicionar(Workshop workshop) {
+        AtaPresenca ataPresenca = new AtaPresenca();
+
+        workshop.setAtaPresenca(ataPresenca);
+
         workshop = workshopRepository.save(workshop);
 
         return workshop;
@@ -54,12 +58,10 @@ public class WorkshopService {
     }
 
 
-    public void criarWorkshopComAtaEColaborador(Integer workshopId, Integer colaboradorId, Integer ataId) {
+    public void adicionarColaborador(Integer workshopId, Integer colaboradorId) {
         Workshop workshop = obterPorID(workshopId);
 
-        AtaPresenca ataPresenca = ataPresencaService.obterPorID(ataId);
-
-        ataPresenca.setWorkshop(workshop);
+        AtaPresenca ataPresenca = workshop.getAtaPresenca();
 
         if (colaboradorId == null) {
             throw new IllegalArgumentException("ID do Colaborador não pode ser nulo");
@@ -71,18 +73,19 @@ public class WorkshopService {
             throw new IllegalArgumentException("Colaborador não encontrado com ID: " + colaboradorId);
         }
 
-        ataPresenca.setColaborador(List.of(colaborador));
+        List<Colaborador> colaboradores = ataPresenca.getColaboradores();
 
-        colaboradorService.atualizar(colaborador.getIdColaborador(), colaborador);
+        colaboradores.add(colaboradores.size(), colaborador);
 
-        // Associa a AtaPresenca ao Workshop
+        ataPresenca.setWorkshop(workshop);
+        ataPresencaRepository.save(ataPresenca);
         workshop.setAtaPresenca(ataPresenca);
-        workshopRepository.save(workshop);
 
+        atualizar(workshopId, workshop);
     }
 
 
-    public List<Workshop> obterWorkshopsDoColaborador(Integer idColaborador) {
+   /* public List<Workshop> obterWorkshopsDoColaborador(Integer idColaborador) {
         Colaborador colaborador = colaboradorService.obterPorId(idColaborador);
 
         if (colaborador != null) {
@@ -97,6 +100,6 @@ public class WorkshopService {
         else {
             throw new IllegalArgumentException("Colaborador não encontrado com ID: " + idColaborador);
         }
-    }
+    }*/
 
 }

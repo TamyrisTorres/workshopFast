@@ -2,6 +2,7 @@ package com.fast.workshop.services;
 
 import com.fast.workshop.model.AtaPresenca;
 import com.fast.workshop.model.Colaborador;
+import com.fast.workshop.model.Workshop;
 import com.fast.workshop.repository.AtaPresencaRepository;
 import com.fast.workshop.repository.ColaboradorRepository;
 import com.fast.workshop.repository.WorkshopRepository;
@@ -78,5 +79,20 @@ public class AtaPresencaService {
         ataPresenca = atualizar(idAta, ataPresenca);
 
         return ataPresenca;
+    }
+
+    public List<Colaborador> obterColaboradoresWorkshop(Integer workshopId) {
+       Optional<Workshop> workshopOptional = workshopRepository.findById(workshopId);
+
+       if (workshopOptional.isPresent()) {
+           Workshop workshop = workshopOptional.get();
+
+           AtaPresenca ataPresenca = workshop.getAtaPresenca();
+
+           return ataPresenca.getColaboradores();
+       }
+       else {
+           throw new RuntimeException();
+       }
     }
 }

@@ -1,15 +1,11 @@
 package com.fast.workshop.controller;
 
-import com.fast.workshop.model.AtaPresenca;
 import com.fast.workshop.model.Workshop;
 import com.fast.workshop.services.WorkshopService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/workshops")
@@ -43,11 +39,12 @@ public class WorkShopController {
         return workshopService.atualizar(id, workshop);
     }
 
-    @PutMapping("/{workshopId}/{ataId}/{colaboradorId}")
-    public void criarWorkshopComAtaEColaborador(@PathVariable Integer workshopId, @PathVariable Integer ataId, @PathVariable Integer colaboradorId) {
+    @PutMapping("/{workshopId}/{colaboradorId}")
+    public void adicionarColaborador(
+            @PathVariable Integer workshopId, @PathVariable Integer colaboradorId) {
 
-         workshopService.criarWorkshopComAtaEColaborador(
-                workshopId, colaboradorId, ataId);
+         workshopService.adicionarColaborador(
+                workshopId, colaboradorId);
     }
 
 }

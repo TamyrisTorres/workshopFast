@@ -1,8 +1,10 @@
 package com.fast.workshop.controller;
 
 import com.fast.workshop.model.AtaPresenca;
+import com.fast.workshop.model.Colaborador;
 import com.fast.workshop.services.AtaPresencaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +32,10 @@ public class AtaPresencaController {
         return ataPresencaService.obterPorID(id);
     }
 
+    @GetMapping("/colaboradores/{workshopId}")
+    public ResponseEntity<List<Colaborador>> obterColaboradoresWorkshop(@PathVariable Integer workshopId) {
+        return ResponseEntity.ok(ataPresencaService.obterColaboradoresWorkshop(workshopId));
+    }
     @DeleteMapping("/{id}")
     public void deletar (@PathVariable Integer id) {
         ataPresencaService.deletar(id);

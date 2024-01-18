@@ -13,18 +13,6 @@ public class Colaborador {
     private Integer idColaborador;
     private String nome;
 
-    @ManyToOne
-    @JoinColumn(name = "ataPresenca_id")
-    private AtaPresenca ataPresenca;
-
-    public AtaPresenca getAtasPresenca() {
-        return ataPresenca;
-    }
-
-    public void setAtasPresenca(AtaPresenca ataPresenca) {
-        this.ataPresenca = ataPresenca;
-    }
-
     public Integer getIdColaborador() {
         return idColaborador;
     }

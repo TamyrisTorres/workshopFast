@@ -12,7 +12,7 @@ public class AtaPresenca {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idAta;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "workshop_id")
     private Workshop workshop;
 
