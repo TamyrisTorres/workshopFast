@@ -2,6 +2,7 @@ package com.fast.workshop.controller;
 
 import com.fast.workshop.model.Workshop;
 import com.fast.workshop.services.WorkshopService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,6 +10,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/workshops")
+@Api(value = "Workshops")
+@CrossOrigin(origins = "*")
 public class WorkShopController {
 
     @Autowired

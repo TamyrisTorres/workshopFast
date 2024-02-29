@@ -74,9 +74,15 @@ public class AtaPresencaService {
 
         Colaborador colaborador = colaboradorService.obterPorId(idColaborador);
 
-        ataPresenca.setColaborador(List.of(colaborador));
+        List<Colaborador> colaboradors = colaboradorService.obterTodos();
 
-        ataPresenca = atualizar(idAta, ataPresenca);
+        colaboradors.add(colaborador);
+
+        ataPresenca.setColaborador(colaboradors);
+
+        colaborador.setAtaPresenca(ataPresenca);
+
+       colaboradorService.atualizar(idColaborador, colaborador);
 
         return ataPresenca;
     }

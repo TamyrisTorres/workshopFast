@@ -3,6 +3,7 @@ package com.fast.workshop.controller;
 import com.fast.workshop.model.AtaPresenca;
 import com.fast.workshop.model.Colaborador;
 import com.fast.workshop.services.AtaPresencaService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/ataPresenca")
+@Api(value = "Ata Presenca")
+@CrossOrigin(origins = "*")
 public class AtaPresencaController {
 
     @Autowired

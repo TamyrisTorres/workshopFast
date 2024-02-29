@@ -1,5 +1,6 @@
 package com.fast.workshop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -12,6 +13,11 @@ public class Colaborador {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idColaborador;
     private String nome;
+
+    @ManyToOne
+    @JoinColumn(name = "idAtaPresenca")
+    @JsonBackReference
+    private AtaPresenca ataPresenca;
 
     public Integer getIdColaborador() {
         return idColaborador;
@@ -27,5 +33,13 @@ public class Colaborador {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public AtaPresenca getAtaPresenca() {
+        return ataPresenca;
+    }
+
+    public void setAtaPresenca(AtaPresenca ataPresenca) {
+        this.ataPresenca = ataPresenca;
     }
 }

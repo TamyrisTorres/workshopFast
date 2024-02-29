@@ -30,7 +30,12 @@ public class WorkshopService {
     public Workshop adicionar(Workshop workshop) {
         AtaPresenca ataPresenca = new AtaPresenca();
 
+        ataPresenca.setName(workshop.getNome());
+
+        ataPresenca = ataPresencaRepository.save(ataPresenca);
+
         workshop.setAtaPresenca(ataPresenca);
+
 
         workshop = workshopRepository.save(workshop);
 
@@ -83,23 +88,5 @@ public class WorkshopService {
 
         atualizar(workshopId, workshop);
     }
-
-
-   /* public List<Workshop> obterWorkshopsDoColaborador(Integer idColaborador) {
-        Colaborador colaborador = colaboradorService.obterPorId(idColaborador);
-
-        if (colaborador != null) {
-            List<Workshop> workshops = new ArrayList<>();
-
-           AtaPresenca ataPresenca = colaborador.getAtasPresenca();
-           workshops.add(ataPresenca.getWorkshop());
-
-           return workshops;
-
-        }
-        else {
-            throw new IllegalArgumentException("Colaborador não encontrado com ID: " + idColaborador);
-        }
-    }*/
 
 }

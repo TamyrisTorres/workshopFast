@@ -1,6 +1,7 @@
 package com.fast.workshop.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -10,13 +11,15 @@ public class Workshop {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "idWorkshop")
     private Integer idWorkshop;
     private String nome;
     private LocalDate dataRealizacao;
     private String descricao;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "id_ataPresenca")
+    @OneToOne
+    @JoinColumn(name = "itAtaPresenca")
+    @JsonBackReference
     private AtaPresenca ataPresenca;
     public Integer getIdWorkshop() {
         return idWorkshop;

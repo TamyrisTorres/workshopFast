@@ -5,6 +5,7 @@ import com.fast.workshop.repository.ColaboradorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -44,5 +45,16 @@ public class ColaboradorService {
         colaborador.setIdColaborador(id);
 
         return colaboradorRepository.save(colaborador);
+    }
+
+    public List<Colaborador> obterPorIdAtaPresenca(Integer idAtaPresenca) {
+        List<Colaborador> colaboradorList = new ArrayList<>();
+
+        for (Colaborador colaborador : obterTodos()) {
+            if (colaborador.getAtaPresenca().getIdAta().equals(idAtaPresenca)) {
+                colaboradorList.add(colaborador);
+            }
+        }
+        return colaboradorList;
     }
 }

@@ -1,6 +1,7 @@
 package com.fast.workshop.model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -10,17 +11,33 @@ public class AtaPresenca {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "idAtaPresenca")
     private Integer idAta;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "workshop_id")
+    private String name;
+
+    @OneToOne(mappedBy = "ataPresenca")
+    @JsonManagedReference
     private Workshop workshop;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "ataPresenca")
+    @JsonManagedReference
     private List<Colaborador> colaboradores;
 
     public Integer getIdAta() {
         return idAta;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setColaboradores(List<Colaborador> colaboradores) {
+        this.colaboradores = colaboradores;
     }
 
     public void setIdAta(Integer idAta) {
